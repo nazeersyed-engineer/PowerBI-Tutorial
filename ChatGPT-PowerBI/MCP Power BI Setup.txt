@@ -1,0 +1,9 @@
+%USERPROFILE%\.vscode\extensions
+
+"C:\Users\nazeer\.vscode\extensions\analysis-services.powerbi-modeling-mcp-1.0.1-win32-x64\server\powerbi-modeling-mcp.exe"
+
+--start
+--skipconfirmation
+
+
+C:\Users\nazeer\.vscode\extensions\analysis-services.powerbi-modeling-mcp-1.0.1-win32-x64\server\powerbi-modeling-mcp.exe
