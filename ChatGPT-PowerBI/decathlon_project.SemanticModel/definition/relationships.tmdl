@@ -1,0 +1,17 @@
+relationship 0b910248-de41-46ef-9de7-6f746d53673f
+	joinOnDateBehavior: datePartOnly
+	fromColumn: sales.Purchase_Date
+	toColumn: LocalDateTable_9376f53e-d98a-419b-b83e-841de5e72aec.Date
+
+relationship sales_Product_ID_products_Product_Key
+	fromColumn: sales.Product_ID
+	toColumn: products.Product_Key
+
+relationship sales_Store_ID_store_Store_Key
+	fromColumn: sales.Store_ID
+	toColumn: store.Store_Key
+
+relationship sales_Purchase_Date_Date_Date
+	fromColumn: sales.Purchase_Date
+	toColumn: Date.Date
+

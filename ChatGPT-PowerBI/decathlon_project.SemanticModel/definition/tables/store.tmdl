@@ -1,0 +1,81 @@
+table store
+	lineageTag: 4cf16882-1798-43eb-9ee1-50b93494fea4
+
+	column Store_Key
+		dataType: string
+		lineageTag: 8c1148a3-95a1-4d3f-ae49-b8239d7f8add
+		summarizeBy: none
+		sourceColumn: Store_Key
+
+		annotation SummarizationSetBy = Automatic
+
+	column Store_Name
+		dataType: string
+		lineageTag: fa293fab-5d51-4613-bcaf-4544b5bcc61e
+		summarizeBy: none
+		sourceColumn: Store_Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column City
+		dataType: string
+		lineageTag: f41a6322-3367-4c03-82e1-39f9bd854904
+		summarizeBy: none
+		sourceColumn: City
+
+		annotation SummarizationSetBy = Automatic
+
+	column State
+		dataType: string
+		lineageTag: c0a685a6-b04e-4697-8506-da04d2a91867
+		summarizeBy: none
+		sourceColumn: State
+
+		annotation SummarizationSetBy = Automatic
+
+	column Region
+		dataType: string
+		lineageTag: 7c2d935a-68f1-4b8c-a2d1-47b0ea4ec4ab
+		summarizeBy: none
+		sourceColumn: Region
+
+		annotation SummarizationSetBy = Automatic
+
+	column Country
+		dataType: string
+		lineageTag: 7fd53e3f-1e20-428e-b3d9-dd7d88c374dc
+		summarizeBy: none
+		sourceColumn: Country
+
+		annotation SummarizationSetBy = Automatic
+
+	column Store_Format
+		dataType: string
+		lineageTag: 355df18b-773e-45ba-8fef-2322860c6a02
+		summarizeBy: none
+		sourceColumn: Store_Format
+
+		annotation SummarizationSetBy = Automatic
+
+	column Floor_Area_Sqm
+		dataType: int64
+		formatString: 0
+		lineageTag: 2a5507fc-33db-4f80-8bbd-9dc09992d7ee
+		summarizeBy: sum
+		sourceColumn: Floor_Area_Sqm
+
+		annotation SummarizationSetBy = Automatic
+
+	partition store = m
+		mode: import
+		source =
+				let
+				    Source = Excel.Workbook(File.Contents("C:\Users\nazeer\Documents\Courses\PowerBI-Tutorial\ChatGPT-PowerBI\store.xlsx"), null, true),
+				    store_Sheet = Source{[Item="store",Kind="Sheet"]}[Data],
+				    #"Promoted Headers" = Table.PromoteHeaders(store_Sheet, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"Store_Key", type text}, {"Store_Name", type text}, {"City", type text}, {"State", type text}, {"Region", type text}, {"Country", type text}, {"Store_Format", type text}, {"Floor_Area_Sqm", Int64.Type}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_ResultType = Table
+

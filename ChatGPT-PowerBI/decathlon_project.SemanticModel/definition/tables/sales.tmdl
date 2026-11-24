@@ -1,0 +1,269 @@
+table sales
+	lineageTag: 77713675-41ab-40fa-bbef-53f8592ec63a
+
+	measure 'Total Sales' = SUM(sales[Net_Sales_INR])
+		formatString: ₹#,##0.00
+		displayFolder: KPI Building
+		lineageTag: f998011b-9a1f-421d-8a1a-059b83503333
+
+	measure 'Total Quantity' = SUM(sales[Quantity])
+		formatString: #,##0
+		displayFolder: KPI Building
+		lineageTag: 168a5cfc-046a-4202-9943-c0f8e85e65ab
+
+	measure 'Total Profit' = SUM(sales[Gross_Profit_INR])
+		formatString: ₹#,##0.00
+		displayFolder: KPI Building
+		lineageTag: ff11adab-a5b7-44ec-aa6e-e25ae3fd8a16
+
+	measure 'Profit Margin %' = DIVIDE([Total Profit],[Total Sales])
+		formatString: 0.00%
+		displayFolder: KPI Building
+		lineageTag: 4a505c8b-96eb-4298-acae-704765320486
+
+	measure 'Average Order Value' = DIVIDE([Total Sales],DISTINCTCOUNT(sales[Order_ID]))
+		formatString: ₹#,##0.00
+		displayFolder: KPI Building
+		lineageTag: 721e4358-c70f-412a-998e-1e370446dae4
+
+	measure 'Sales YTD' = TOTALYTD([Total Sales],'Date'[Date])
+		formatString: ₹#,##0.00
+		displayFolder: KPI Building
+		lineageTag: 5821d714-e802-48db-8110-29d47ad2ed23
+
+	measure 'Previous Year Sales' = CALCULATE([Total Sales],SAMEPERIODLASTYEAR('Date'[Date]))
+		formatString: ₹#,##0.00
+		displayFolder: KPI Building
+		lineageTag: 4c847d81-8076-450b-97a2-760306b51ff1
+
+	measure 'YoY Sales Growth' = [Total Sales]-[Previous Year Sales]
+		formatString: ₹#,##0.00
+		displayFolder: KPI Building
+		lineageTag: 42b6ace5-c765-4362-8af5-c37cb2394f87
+
+	measure 'YoY Sales Growth %' = DIVIDE([YoY Sales Growth],[Previous Year Sales])
+		formatString: 0.00%
+		displayFolder: KPI Building
+		lineageTag: 5db9da67-a59f-4e9a-96e0-c9db983b72f2
+
+	measure 'Running Total Sales' = CALCULATE([Total Sales],FILTER(ALLSELECTED('Date'[Date]),'Date'[Date]<=MAX('Date'[Date])))
+		formatString: ₹#,##0.00
+		displayFolder: KPI Building
+		lineageTag: c28185d6-e991-4baa-9775-a7dbacd336a9
+
+	column Sale_Line_ID
+		dataType: string
+		lineageTag: 0404ef0f-4c59-4e04-80c3-3d38e2179df6
+		summarizeBy: none
+		sourceColumn: Sale_Line_ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column Order_ID
+		dataType: string
+		lineageTag: d301d7fb-0209-4389-8606-7ebd771dee43
+		summarizeBy: none
+		sourceColumn: Order_ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column Purchase_Date
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 29e65afb-c865-4ca6-afe8-f16aa084c420
+		summarizeBy: none
+		sourceColumn: Purchase_Date
+
+		variation Variation
+			isDefault
+			relationship: 0b910248-de41-46ef-9de7-6f746d53673f
+			defaultHierarchy: LocalDateTable_9376f53e-d98a-419b-b83e-841de5e72aec.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column Product_ID
+		dataType: string
+		lineageTag: a36ab921-7166-472c-86f5-44b97f1334b5
+		summarizeBy: none
+		sourceColumn: Product_ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column Store_ID
+		dataType: string
+		lineageTag: 5d0e8e82-694f-48ba-8cad-0c206afa8ac3
+		summarizeBy: none
+		sourceColumn: Store_ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column Channel
+		dataType: string
+		lineageTag: 835e88e3-61fd-4d2a-8c5a-dbebee0d2e17
+		summarizeBy: none
+		sourceColumn: Channel
+
+		annotation SummarizationSetBy = Automatic
+
+	column Payment_Method
+		dataType: string
+		lineageTag: 03999106-492a-4851-bbf9-d5e202834929
+		summarizeBy: none
+		sourceColumn: Payment_Method
+
+		annotation SummarizationSetBy = Automatic
+
+	column Order_Hour
+		dataType: int64
+		formatString: 0
+		lineageTag: 31b91f03-0888-446e-b69c-94f144f7a2eb
+		summarizeBy: sum
+		sourceColumn: Order_Hour
+
+		annotation SummarizationSetBy = Automatic
+
+	column Promotion
+		dataType: string
+		lineageTag: d89f3bcc-8dba-4c5e-bd9b-5218cb01c0a0
+		summarizeBy: none
+		sourceColumn: Promotion
+
+		annotation SummarizationSetBy = Automatic
+
+	column Quantity
+		dataType: int64
+		formatString: 0
+		lineageTag: e3b663c7-3338-42b8-87d0-d789265d85b8
+		summarizeBy: sum
+		sourceColumn: Quantity
+
+		annotation SummarizationSetBy = Automatic
+
+	column Unit_List_Price_INR
+		dataType: int64
+		formatString: 0
+		lineageTag: 22b11abb-7aae-4c8a-b179-949c5875d644
+		summarizeBy: sum
+		sourceColumn: Unit_List_Price_INR
+
+		annotation SummarizationSetBy = Automatic
+
+	column Unit_Cost_INR
+		dataType: int64
+		formatString: 0
+		lineageTag: 1ff1f108-6a7d-4594-8bed-941a1ba2ae29
+		summarizeBy: sum
+		sourceColumn: Unit_Cost_INR
+
+		annotation SummarizationSetBy = Automatic
+
+	column Discount_Pct
+		dataType: double
+		lineageTag: e97a5e53-21be-421c-b8e2-f66f64b49c10
+		summarizeBy: sum
+		sourceColumn: Discount_Pct
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Gross_Sales_INR
+		dataType: int64
+		formatString: 0
+		lineageTag: 1fccbdc5-2dc1-4ea5-95ef-6a3b31835f13
+		summarizeBy: sum
+		sourceColumn: Gross_Sales_INR
+
+		annotation SummarizationSetBy = Automatic
+
+	column Discount_INR
+		dataType: double
+		lineageTag: e9c00737-896a-4bfb-9e0f-fb9342771320
+		summarizeBy: sum
+		sourceColumn: Discount_INR
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Sales_Before_Returns_INR
+		dataType: double
+		lineageTag: b69d8027-689c-418a-8a43-5e87af2f255e
+		summarizeBy: sum
+		sourceColumn: Sales_Before_Returns_INR
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Returned_Qty
+		dataType: int64
+		formatString: 0
+		lineageTag: 697d6b68-93d7-4075-aca8-1b4f6dfbdc0a
+		summarizeBy: sum
+		sourceColumn: Returned_Qty
+
+		annotation SummarizationSetBy = Automatic
+
+	column Refund_INR
+		dataType: double
+		lineageTag: beff7e13-4274-496c-981e-a015634df651
+		summarizeBy: sum
+		sourceColumn: Refund_INR
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Net_Sales_INR
+		dataType: double
+		lineageTag: 6e2ccfb8-1a16-4193-afb9-9810cb98ddcc
+		summarizeBy: sum
+		sourceColumn: Net_Sales_INR
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Net_COGS_INR
+		dataType: int64
+		formatString: 0
+		lineageTag: aace9480-bb94-4035-9e22-4caa4e5fbb7d
+		summarizeBy: sum
+		sourceColumn: Net_COGS_INR
+
+		annotation SummarizationSetBy = Automatic
+
+	column Gross_Profit_INR
+		dataType: double
+		lineageTag: 2fadf092-8e1c-4e73-8a49-e1bdf2b6d07d
+		summarizeBy: sum
+		sourceColumn: Gross_Profit_INR
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Return_Reason
+		dataType: string
+		lineageTag: 9882461c-f7fb-499b-ac0b-c1c2651c3042
+		summarizeBy: none
+		sourceColumn: Return_Reason
+
+		annotation SummarizationSetBy = Automatic
+
+	partition sales = m
+		mode: import
+		source =
+				let
+				    Source = Excel.Workbook(File.Contents("C:\Users\nazeer\Documents\Courses\PowerBI-Tutorial\ChatGPT-PowerBI\sales.xlsx"), null, true),
+				    sales_Sheet = Source{[Item="sales",Kind="Sheet"]}[Data],
+				    #"Promoted Headers" = Table.PromoteHeaders(sales_Sheet, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"Sale_Line_ID", type text}, {"Order_ID", type text}, {"Purchase_Date", type date}, {"Product_ID", type text}, {"Store_ID", type text}, {"Channel", type text}, {"Payment_Method", type text}, {"Order_Hour", Int64.Type}, {"Promotion", type text}, {"Quantity", Int64.Type}, {"Unit_List_Price_INR", Int64.Type}, {"Unit_Cost_INR", Int64.Type}, {"Discount_Pct", type number}, {"Gross_Sales_INR", Int64.Type}, {"Discount_INR", type number}, {"Sales_Before_Returns_INR", type number}, {"Returned_Qty", Int64.Type}, {"Refund_INR", type number}, {"Net_Sales_INR", type number}, {"Net_COGS_INR", Int64.Type}, {"Gross_Profit_INR", type number}, {"Return_Reason", type text}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_ResultType = Table
+

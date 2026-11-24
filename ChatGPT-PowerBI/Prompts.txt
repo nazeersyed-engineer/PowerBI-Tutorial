@@ -1,0 +1,19 @@
+1. Please connect to decathlon project Power BI file.
+
+2. List all tables and all fields available in the Power BI model.
+
+3. Inspect all tables and fields available in the Power BI file and create the appropriate data model by creating relationships between the tables.
+
+4. Create a Date Table using Purchase Date for the model with only the required date-related columns like Date, Month Num, Month Name, Year, Quarter Num, Quarter (Display quarter as Q1, Q2, Q3, Q4), Week Num, Day Num, Day Name. Do not create any additional columns.
+
+5. Inspect the existing model and identify the correct tables and fields, and create below measures for KPI buidling
+Total Sales
+Total Quantity
+Total Profit
+Profit Margin %
+Average Order Value
+Sales YTD
+Previous Year Sales
+YoY Sales Growth
+YoY Sales Growth %
+Running Total Sales

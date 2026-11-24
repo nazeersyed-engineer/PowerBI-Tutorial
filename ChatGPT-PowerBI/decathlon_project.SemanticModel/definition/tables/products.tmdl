@@ -1,0 +1,90 @@
+table products
+	lineageTag: 13aed8ae-251d-4edb-ad9e-9699cd2b61ba
+
+	column Product_Key
+		dataType: string
+		lineageTag: 825d1f79-8b2a-48cb-89ef-f35c8f7b8e61
+		summarizeBy: none
+		sourceColumn: Product_Key
+
+		annotation SummarizationSetBy = Automatic
+
+	column Product_Name
+		dataType: string
+		lineageTag: 231972f2-5911-4fc1-a89b-695bb6f3685b
+		summarizeBy: none
+		sourceColumn: Product_Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column Sport
+		dataType: string
+		lineageTag: 389dbfdc-9422-4f53-8204-05e68fbc69fd
+		summarizeBy: none
+		sourceColumn: Sport
+
+		annotation SummarizationSetBy = Automatic
+
+	column Product_Type
+		dataType: string
+		lineageTag: 5a884c65-ae7a-4d37-ab83-74d9c151469c
+		summarizeBy: none
+		sourceColumn: Product_Type
+
+		annotation SummarizationSetBy = Automatic
+
+	column Brand_Label
+		dataType: string
+		lineageTag: 14e4b249-2707-4de6-b137-a62642c5dcd8
+		summarizeBy: none
+		sourceColumn: Brand_Label
+
+		annotation SummarizationSetBy = Automatic
+
+	column Product_Tier
+		dataType: string
+		lineageTag: 6db03e7b-5de3-4982-ac14-c9a36f4bd3c5
+		summarizeBy: none
+		sourceColumn: Product_Tier
+
+		annotation SummarizationSetBy = Automatic
+
+	column Colour
+		dataType: string
+		lineageTag: e3c2e20a-053b-4287-8af0-7cda4d315b0f
+		summarizeBy: none
+		sourceColumn: Colour
+
+		annotation SummarizationSetBy = Automatic
+
+	column Base_List_Price_INR
+		dataType: int64
+		formatString: 0
+		lineageTag: 3dd31ca3-f51c-4147-86c3-f2b01ea817ae
+		summarizeBy: sum
+		sourceColumn: Base_List_Price_INR
+
+		annotation SummarizationSetBy = Automatic
+
+	column Base_Unit_Cost_INR
+		dataType: int64
+		formatString: 0
+		lineageTag: 4165cd40-84ad-47b6-be20-00bd8b9c127b
+		summarizeBy: sum
+		sourceColumn: Base_Unit_Cost_INR
+
+		annotation SummarizationSetBy = Automatic
+
+	partition products = m
+		mode: import
+		source =
+				let
+				    Source = Excel.Workbook(File.Contents("C:\Users\nazeer\Documents\Courses\PowerBI-Tutorial\ChatGPT-PowerBI\products.xlsx"), null, true),
+				    products_Sheet = Source{[Item="products",Kind="Sheet"]}[Data],
+				    #"Promoted Headers" = Table.PromoteHeaders(products_Sheet, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"Product_Key", type text}, {"Product_Name", type text}, {"Sport", type text}, {"Product_Type", type text}, {"Brand_Label", type text}, {"Product_Tier", type text}, {"Colour", type text}, {"Base_List_Price_INR", Int64.Type}, {"Base_Unit_Cost_INR", Int64.Type}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_ResultType = Table
+

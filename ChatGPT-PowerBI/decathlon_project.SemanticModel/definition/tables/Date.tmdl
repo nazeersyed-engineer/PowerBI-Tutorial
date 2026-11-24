@@ -1,0 +1,54 @@
+table Date
+	lineageTag: 1977cfa1-76e5-41e7-b37f-0c8b0b22b858
+	dataCategory: Time
+
+	column Date
+		isUnique
+		lineageTag: e26e99d6-11f5-4b5e-a3c3-2e3348c9a1ed
+		isNameInferred
+		sourceColumn: [Date]
+
+	column 'Month Num'
+		lineageTag: cda58424-cefc-4552-80c4-d04bdb819831
+		isNameInferred
+		sourceColumn: [Month Num]
+
+	column 'Month Name'
+		lineageTag: 7d56522b-05d4-4f79-b2cc-2001798ff24d
+		isNameInferred
+		sourceColumn: [Month Name]
+
+	column Year
+		lineageTag: dbb4e9c9-3840-4ace-adb9-aa72b58d79af
+		isNameInferred
+		sourceColumn: [Year]
+
+	column 'Quarter Num'
+		lineageTag: 3f2a0ec4-0843-4803-ad7e-c568d4e66019
+		isNameInferred
+		sourceColumn: [Quarter Num]
+
+	column Quarter
+		lineageTag: 1363f58a-bf17-4e0f-9be3-bd98add293bf
+		isNameInferred
+		sourceColumn: [Quarter]
+
+	column 'Week Num'
+		lineageTag: b0488e05-738f-4362-bbb5-4f9c92fe0b1c
+		isNameInferred
+		sourceColumn: [Week Num]
+
+	column 'Day Num'
+		lineageTag: 2a611ac8-6707-4120-8f5e-5d218f88ec00
+		isNameInferred
+		sourceColumn: [Day Num]
+
+	column 'Day Name'
+		lineageTag: d4a24a5b-bfd2-4e10-b3ac-e0ac0fcd2f1a
+		isNameInferred
+		sourceColumn: [Day Name]
+
+	partition Date = calculated
+		mode: import
+		source = VAR MinDate = MINX(ALL(sales), sales[Purchase_Date]) VAR MaxDate = MAXX(ALL(sales), sales[Purchase_Date]) RETURN SELECTCOLUMNS(ADDCOLUMNS(CALENDAR(DATE(YEAR(MinDate),1,1),DATE(YEAR(MaxDate),12,31)),"Month Num",MONTH([Date]),"Month Name",FORMAT([Date],"MMMM"),"Year",YEAR([Date]),"Quarter Num",QUARTER([Date]),"Quarter","Q"&FORMAT(QUARTER([Date]),"0"),"Week Num",WEEKNUM([Date],2),"Day Num",DAY([Date]),"Day Name",FORMAT([Date],"dddd")),"Date",[Date],"Month Num",[Month Num],"Month Name",[Month Name],"Year",[Year],"Quarter Num",[Quarter Num],"Quarter",[Quarter],"Week Num",[Week Num],"Day Num",[Day Num],"Day Name",[Day Name])
+
